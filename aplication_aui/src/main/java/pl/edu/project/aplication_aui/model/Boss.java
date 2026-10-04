@@ -25,5 +25,7 @@ public class Boss {
     private int salary;
 
     @OneToMany(mappedBy = "boss", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<Employee> employees = new ArrayList<>();
 }
