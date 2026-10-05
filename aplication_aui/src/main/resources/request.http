@@ -1,0 +1,49 @@
+
+### Pobranie wszystkich szefów
+GET http://localhost:8080/api/bosses
+
+### Tworzenie nowego szefa
+POST http://localhost:8080/api/bosses
+Content-Type: application/json
+
+{
+"name": "Bartek",
+"salary": 15000.0
+}
+
+### Pobranie konkretnego szefa
+GET http://localhost:8080/api/bosses/94ac92fb-63dd-4334-a861-ec323d7f7c61
+
+### Pobranie nieistniejącego szefa
+GET http://localhost:8080/api/bosses/00000000-0000-0000-0000-000000000000
+
+### Usuwanie szefa po ID
+DELETE http://localhost:8080/api/bosses/94ac92fb-63dd-4334-a861-ec323d7f7c61
+
+
+### Dodanie pracownika do konkretnego szefa
+POST http://localhost:8080/api/bosses/04094d98-0de5-4029-983f-99b840ac0ddf/employees
+Content-Type: application/json
+
+{
+"name": "Adam Nowak",
+"badgeNumber": 101
+}
+
+### Dodanie pracownika do nieistniejącego szefa
+POST http://localhost:8080/api/bosses/00000000-0000-0000-0000-000000000000/employees
+Content-Type: application/json
+
+{
+"name": "Andrzej",
+"badgeNumber": 102
+}
+
+### Pobranie wszystkich pracowników danego szefa
+GET http://localhost:8080/api/bosses/04094d98-0de5-4029-983f-99b840ac0ddf/employees
+
+### Pobranie konkretnego pracownika
+GET http://localhost:8080/api/bosses/04094d98-0de5-4029-983f-99b840ac0ddf/employees/f034f186-1085-4b25-8b30-4964824af9d2
+
+### Usuwanie pracownika po ID
+DELETE http://localhost:8080/api/bosses/04094d98-0de5-4029-983f-99b840ac0ddf/employees/f034f186-1085-4b25-8b30-4964824af9d2

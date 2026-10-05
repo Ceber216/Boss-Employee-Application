@@ -24,7 +24,7 @@ public class Boss {
     @Column(name = "bosses_salary")
     private int salary;
 
-    @OneToMany(mappedBy = "boss", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "boss", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<Employee> employees = new ArrayList<>();

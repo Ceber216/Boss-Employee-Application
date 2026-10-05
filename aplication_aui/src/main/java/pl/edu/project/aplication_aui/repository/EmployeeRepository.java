@@ -1,7 +1,9 @@
-package pl.edu.project.aplication_aui.model;
+package pl.edu.project.aplication_aui.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import pl.edu.project.aplication_aui.model.Boss;
+import pl.edu.project.aplication_aui.model.Employee;
 
 import java.util.List;
 import java.util.UUID;

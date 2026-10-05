@@ -1,10 +1,11 @@
-package pl.edu.project.aplication_aui.model;
+package pl.edu.project.aplication_aui.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.edu.project.aplication_aui.model.Boss;
+import pl.edu.project.aplication_aui.repository.BossRepository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service

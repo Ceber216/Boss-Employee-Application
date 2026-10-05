@@ -1,10 +1,13 @@
-package pl.edu.project.aplication_aui.model;
+package pl.edu.project.aplication_aui.start;
 
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import pl.edu.project.aplication_aui.model.Boss;
+import pl.edu.project.aplication_aui.model.Employee;
+import pl.edu.project.aplication_aui.service.BossService;
+import pl.edu.project.aplication_aui.service.EmployeeService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
