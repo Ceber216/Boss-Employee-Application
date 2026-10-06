@@ -1,4 +1,4 @@
-package pl.edu.project.aplication_aui.dto;
+package pl.edu.project.bossservice.dto;
 
 
 import lombok.AllArgsConstructor;

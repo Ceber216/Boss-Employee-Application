@@ -1,4 +1,4 @@
-package pl.edu.project.aplication_aui.model;
+package pl.edu.project.bossservice.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,8 +24,4 @@ public class Boss {
     @Column(name = "bosses_salary")
     private int salary;
 
-    @OneToMany(mappedBy = "boss", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private List<Employee> employees = new ArrayList<>();
 }

@@ -1,15 +1,16 @@
-package pl.edu.project.aplication_aui.controller;
+package pl.edu.project.bossservice.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import pl.edu.project.aplication_aui.dto.CreateBossDTO;
-import pl.edu.project.aplication_aui.dto.GetBossResponse;
-import pl.edu.project.aplication_aui.model.Boss;
-import pl.edu.project.aplication_aui.service.BossService;
 
-import java.util.ArrayList;
+import pl.edu.project.bossservice.dto.CreateBossDTO;
+import pl.edu.project.bossservice.dto.GetBossResponse;
+import pl.edu.project.bossservice.model.Boss;
+import pl.edu.project.bossservice.service.BossService;
+
+
 import java.util.List;
 import java.util.UUID;
 
@@ -22,7 +23,7 @@ public class BossController {
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@RequestBody CreateBossDTO createBossDTO){
-        bossService.save(new Boss(UUID.randomUUID(),createBossDTO.getName(),createBossDTO.getSalary(),new ArrayList<>()));
+        bossService.save(new Boss(UUID.randomUUID(),createBossDTO.getName(),createBossDTO.getSalary()));
     }
 
     @DeleteMapping("/{id}")
