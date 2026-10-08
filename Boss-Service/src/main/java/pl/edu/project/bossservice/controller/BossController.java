@@ -1,8 +1,12 @@
 package pl.edu.project.bossservice.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
 import pl.edu.project.bossservice.dto.CreateBossDTO;
@@ -23,7 +27,17 @@ public class BossController {
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@RequestBody CreateBossDTO createBossDTO){
-        bossService.save(new Boss(UUID.randomUUID(),createBossDTO.getName(),createBossDTO.getSalary()));
+        Boss boss = new Boss(UUID.randomUUID(),createBossDTO.getName(),createBossDTO.getSalary());
+        final String uri = "http://localhost:8082/api/bosses";
+        RestTemplate restTemplate = new RestTemplate();
+        HttpEntity<Boss> new_boss = new HttpEntity<>(boss);
+        HttpStatusCode status = restTemplate.exchange(uri, HttpMethod.POST, new_boss,Void.class).getStatusCode();
+        if(!status.is2xxSuccessful()){
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE,"Synchronisation failed");
+        }
+        else{
+            bossService.save(boss);
+        }
     }
 
     @DeleteMapping("/{id}")
@@ -32,7 +46,15 @@ public class BossController {
         if(bossService.findById(id) == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Boss not found! ");
         }
-        bossService.deleteById(id);
+        final String uri = "http://localhost:8082/api/bosses/" + id;
+        RestTemplate restTemplate = new RestTemplate();
+        HttpStatusCode status = restTemplate.exchange(uri,HttpMethod.DELETE, null,Void.class).getStatusCode();
+        if(!status.is2xxSuccessful()){
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE,"Synchronisation failed");
+        }
+        else{
+            bossService.deleteById(id);
+        }
     }
 
     @GetMapping()
