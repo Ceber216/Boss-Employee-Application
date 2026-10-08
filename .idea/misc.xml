@@ -8,6 +8,7 @@
         <option value="$PROJECT_DIR$/aplication_aui/pom.xml" />
         <option value="$PROJECT_DIR$/Boss-Service/pom.xml" />
         <option value="$PROJECT_DIR$/cos/Employee-Service/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-gateway/pom.xml" />
       </list>
     </option>
   </component>

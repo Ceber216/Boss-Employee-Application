@@ -31,6 +31,6 @@ public class EmployeeService {
     }
 
     public List<Employee> findAllByBoss(SimplifiedBoss boss){
-        return employeeRepository.findAllByBoss(boss);
+        return employeeRepository.findAllBySimplifiedBoss(boss);
     }
 }

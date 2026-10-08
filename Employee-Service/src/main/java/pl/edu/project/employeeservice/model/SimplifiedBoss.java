@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 import java.util.List;
 import java.util.UUID;
 
@@ -21,6 +22,6 @@ public class SimplifiedBoss {
     @Column(name = "simplifiedboss_id")
     private UUID id;
 
-    @OneToMany(mappedBy = "simplifiedBoss")
+    @OneToMany(mappedBy = "simplifiedBoss",cascade = CascadeType.REMOVE)
     private List<Employee> employees;
 }

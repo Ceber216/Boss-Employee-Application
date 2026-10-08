@@ -12,5 +12,5 @@ import java.util.UUID;
 public interface EmployeeRepository extends JpaRepository<Employee, UUID> {
     //Query Creation from Method Names
     Employee findEmployeesByBadgeNumber(int badgeNumber);
-    List<Employee> findAllByBoss(SimplifiedBoss boss);
+    List<Employee> findAllBySimplifiedBoss(SimplifiedBoss boss);
 }
