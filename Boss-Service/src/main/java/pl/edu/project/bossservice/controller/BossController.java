@@ -22,7 +22,7 @@ import java.util.UUID;
 @RequestMapping("api/bosses")
 @AllArgsConstructor
 public class BossController {
-    private final BossService bossService;
+    private final BossService _bossService;
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
@@ -36,14 +36,14 @@ public class BossController {
             throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE,"Synchronisation failed");
         }
         else{
-            bossService.save(boss);
+            _bossService.save(boss);
         }
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable UUID id){
-        if(bossService.findById(id) == null){
+        if(_bossService.findById(id) == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Boss not found! ");
         }
         final String uri = "http://localhost:8082/api/bosses/" + id;
@@ -53,13 +53,13 @@ public class BossController {
             throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE,"Synchronisation failed");
         }
         else{
-            bossService.deleteById(id);
+            _bossService.deleteById(id);
         }
     }
 
     @GetMapping()
     public List<GetBossResponse> findAll() {
-        List<Boss> temporaryList = bossService.findAll();
+        List<Boss> temporaryList = _bossService.findAll();
         return temporaryList.stream()
                 .map(boss -> new GetBossResponse(boss.getId(), boss.getName()))
                 .toList();
@@ -67,9 +67,9 @@ public class BossController {
 
     @GetMapping("/{bossId}")
     public GetBossResponse findById(@PathVariable UUID bossId){
-        if(bossService.findById(bossId) == null){
+        if(_bossService.findById(bossId) == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Boss not found");
         }
-        return new GetBossResponse(bossService.findById(bossId).getId(),bossService.findById(bossId).getName());
+        return new GetBossResponse(_bossService.findById(bossId).getId(), _bossService.findById(bossId).getName());
     }
 }

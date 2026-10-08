@@ -3,11 +3,9 @@ package pl.edu.project.employeeservice.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.edu.project.employeeservice.model.Employee;
 import pl.edu.project.employeeservice.model.SimplifiedBoss;
 import pl.edu.project.employeeservice.repository.SimplifiedBossRepository;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service

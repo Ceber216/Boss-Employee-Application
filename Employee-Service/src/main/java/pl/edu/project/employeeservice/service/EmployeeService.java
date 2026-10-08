@@ -12,25 +12,25 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class EmployeeService {
-    private final EmployeeRepository employeeRepository;
+    private final EmployeeRepository _employeeRepository;
 
     public List<Employee> findAll(){
-        return employeeRepository.findAll();
+        return _employeeRepository.findAll();
     }
 
     public Employee findById(UUID id){
-        return employeeRepository.findById(id).orElse(null);
+        return _employeeRepository.findById(id).orElse(null);
     }
 
     public void save(Employee employee){
-        employeeRepository.save(employee);
+        _employeeRepository.save(employee);
     }
 
     public void deleteById(UUID id){
-        employeeRepository.deleteById(id);
+        _employeeRepository.deleteById(id);
     }
 
     public List<Employee> findAllByBoss(SimplifiedBoss boss){
-        return employeeRepository.findAllBySimplifiedBoss(boss);
+        return _employeeRepository.findAllBySimplifiedBoss(boss);
     }
 }

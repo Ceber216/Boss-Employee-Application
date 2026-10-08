@@ -12,21 +12,21 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class BossService {
-    private final BossRepository bossRepository;
+    private final BossRepository _bossRepository;
 
     public List<Boss> findAll(){
-        return bossRepository.findAll();
+        return _bossRepository.findAll();
     }
 
     public Boss findById(UUID id){
-        return bossRepository.findById(id).orElse(null);
+        return _bossRepository.findById(id).orElse(null);
     }
 
     public void save(Boss boss){
-        bossRepository.save(boss);
+        _bossRepository.save(boss);
     }
 
     public void deleteById(UUID id){
-        bossRepository.deleteById(id);
+        _bossRepository.deleteById(id);
     }
 }

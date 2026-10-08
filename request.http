@@ -17,12 +17,12 @@ GET http://localhost:8080/api/bosses/b05749e4-373c-49ee-a4e5-aaa53e03bb13
 GET http://localhost:8080/api/bosses/00000000-0000-0000-0000-000000000000
 
 ### Usuwanie szefa po ID
-DELETE http://localhost:8080/api/bosses/b05749e4-373c-49ee-a4e5-aaa53e03bb13
+DELETE http://localhost:8080/api/bosses/383467da-1de5-4609-b73f-a695d0625ad7
 
 
 
 ### Dodanie pracownika do konkretnego szefa
-POST http://localhost:8080/api/bosses/b05749e4-373c-49ee-a4e5-aaa53e03bb13/employees
+POST http://localhost:8080/api/bosses/383467da-1de5-4609-b73f-a695d0625ad7/employees
 Content-Type: application/json
 
 {
@@ -40,7 +40,7 @@ Content-Type: application/json
 }
 
 ### Pobranie wszystkich pracowników danego szefa
-GET http://localhost:8080/api/bosses/b05749e4-373c-49ee-a4e5-aaa53e03bb13/employees
+GET http://localhost:8080/api/bosses/383467da-1de5-4609-b73f-a695d0625ad7/employees
 
 ### Pobranie konkretnego pracownika
 GET http://localhost:8080/api/bosses/04094d98-0de5-4029-983f-99b840ac0ddf/employees/f034f186-1085-4b25-8b30-4964824af9d2

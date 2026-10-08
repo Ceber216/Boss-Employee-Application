@@ -18,36 +18,36 @@ import java.util.UUID;
 @RequestMapping("/api/bosses/{bossId}/employees")
 @AllArgsConstructor
 public class EmployeeController {
-    private final EmployeeService employeeService;
-    private final SimplifiedBossService simplifiedBossService;
+    private final EmployeeService _employeeService;
+    private final SimplifiedBossService _simplifiedBossService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@RequestBody CreateEmployeeDTO createEmployeeDTO, @PathVariable UUID bossId){
-        if(simplifiedBossService.findById(bossId) == null){
+        if(_simplifiedBossService.findById(bossId) == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Boss not found");
         }
-        employeeService.save(new Employee(UUID.randomUUID(),createEmployeeDTO.getName(),createEmployeeDTO.getBadgeNumber(), simplifiedBossService.findById(bossId)));
+        _employeeService.save(new Employee(UUID.randomUUID(),createEmployeeDTO.getName(),createEmployeeDTO.getBadgeNumber(), _simplifiedBossService.findById(bossId)));
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable UUID id, @PathVariable UUID bossId){
-        if(simplifiedBossService.findById(bossId) == null){
+        if(_simplifiedBossService.findById(bossId) == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Boss not found");
         }
-        if(employeeService.findById(id) == null){
+        if(_employeeService.findById(id) == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Employee not found");
         }
-        employeeService.deleteById(id);
+        _employeeService.deleteById(id);
     }
 
     @GetMapping
     public List<GetEmployeeResponse> findAll(@PathVariable UUID bossId){
-        if(simplifiedBossService.findById(bossId) == null){
+        if(_simplifiedBossService.findById(bossId) == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Boss not found");
         }
-        SimplifiedBoss boss =  simplifiedBossService.findById(bossId);
+        SimplifiedBoss boss =  _simplifiedBossService.findById(bossId);
         return boss.getEmployees().stream()
                 .map(employee -> new GetEmployeeResponse(employee.getId(),employee.getName()))
                 .toList();
@@ -56,12 +56,12 @@ public class EmployeeController {
 
     @GetMapping("/{id}")
     public GetEmployeeResponse findById(@PathVariable UUID bossId,@PathVariable UUID id){
-        if(simplifiedBossService.findById(bossId) == null){
+        if(_simplifiedBossService.findById(bossId) == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Boss not found");
         }
-        if(employeeService.findById(id) == null){
+        if(_employeeService.findById(id) == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Employee not found");
         }
-        return new GetEmployeeResponse(employeeService.findById(id).getId(),employeeService.findById(id).getName());
+        return new GetEmployeeResponse(_employeeService.findById(id).getId(), _employeeService.findById(id).getName());
     }
 }
