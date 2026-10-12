@@ -1,0 +1,39 @@
+<main class="main">
+  <div class="content">
+    <div class="left-side">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Salary</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let boss of bosses">
+            <td> {{boss.name}}</td>
+            <td> {{boss.salary}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="divider" role="separator" aria-label="Divider"></div>
+    <div class="right-side">
+      <form [formGroup]="bossForm" (ngSubmit)="onSubmit()">
+
+        <label for="name">Name:</label>
+        <input type = "text" id="name" name="name" placeholder="Write boss name" formControlName="name">
+        <br><br>
+
+        <label for="salary">Salary:</label>
+        <input type = "text" id="salary" name="salary" placeholder="Write boss salary" formControlName="salary">
+        <br><br>
+
+        <button type="submit" [disabled] = "bossForm.invalid">Send</button>
+      </form>
+    </div>
+  </div>
+</main>
+
+
+
+
