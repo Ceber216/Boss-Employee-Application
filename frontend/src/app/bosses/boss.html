@@ -1,23 +1,32 @@
 <main class="main">
   <div class="content">
     <div class="left-side">
-      <table>
+      <table class="table1">
         <thead>
           <tr>
             <th scope="col">Name</th>
             <th scope="col">Salary</th>
+            <th scope="col">Delete</th>
+            <th scope="col">Edit</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let boss of bosses">
             <td> {{boss.name}}</td>
             <td> {{boss.salary}}</td>
+            <td>
+              <button class="delete_button"(click)="onDelete(boss)">Delete</button>
+            </td>
+            <td>
+              <button class="edit_button" (click)="onEdit(boss)">Edit</button>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
     <div class="divider" role="separator" aria-label="Divider"></div>
     <div class="right-side">
+      <h2>{{ isEditing() ? 'Edit Boss' : 'Add New Boss' }}</h2>
       <form [formGroup]="bossForm" (ngSubmit)="onSubmit()">
 
         <label for="name">Name:</label>
@@ -28,7 +37,13 @@
         <input type = "text" id="salary" name="salary" placeholder="Write boss salary" formControlName="salary">
         <br><br>
 
-        <button type="submit" [disabled] = "bossForm.invalid">Send</button>
+        <div class="form-actions">
+          <button type="submit" [disabled]="bossForm.invalid">
+            {{ isEditing() ? 'Save Changes' : 'Send' }}
+          </button>
+
+          <button type="button" *ngIf="isEditing()" (click)="cancelEdit()">Cancel</button>
+        </div>
       </form>
     </div>
   </div>

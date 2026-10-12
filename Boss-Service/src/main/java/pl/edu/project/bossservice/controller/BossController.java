@@ -61,7 +61,7 @@ public class BossController {
     public List<GetBossResponse> findAll() {
         List<Boss> temporaryList = _bossService.findAll();
         return temporaryList.stream()
-                .map(boss -> new GetBossResponse(boss.getId(), boss.getName()))
+                .map(boss -> new GetBossResponse(boss.getId(), boss.getName(),boss.getSalary()))
                 .toList();
     }
 
@@ -70,6 +70,19 @@ public class BossController {
         if(_bossService.findById(bossId) == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Boss not found");
         }
-        return new GetBossResponse(_bossService.findById(bossId).getId(), _bossService.findById(bossId).getName());
+        return new GetBossResponse(_bossService.findById(bossId).getId(), _bossService.findById(bossId).getName(),_bossService.findById(bossId).getSalary());
+    }
+
+    @PutMapping("/{bossId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void putBoss(@RequestBody CreateBossDTO createBossDTO, @PathVariable UUID bossId){
+        Boss boss = _bossService.findById(bossId);
+        if(_bossService.findById(bossId) == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Boss not found");
+        }
+        boss.setName(createBossDTO.getName());
+        boss.setSalary(createBossDTO.getSalary());
+
+        _bossService.save(boss);
     }
 }

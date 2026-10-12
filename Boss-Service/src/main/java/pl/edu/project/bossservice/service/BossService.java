@@ -29,4 +29,5 @@ public class BossService {
     public void deleteById(UUID id){
         _bossRepository.deleteById(id);
     }
+
 }

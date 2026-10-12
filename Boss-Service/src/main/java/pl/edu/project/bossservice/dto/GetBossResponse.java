@@ -15,4 +15,5 @@ import java.util.UUID;
 public class GetBossResponse {
     private UUID id;
     private String name;
+    private int salary;
 }

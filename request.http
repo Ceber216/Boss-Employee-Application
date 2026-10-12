@@ -10,6 +10,15 @@ Content-Type: application/json
   "salary": 15000
 }
 
+### Modyfikacja konkretnego szefa
+PUT http://localhost:8080/api/bosses/49176995-39d4-48d9-844b-deab7c5bf5e7
+Content-Type: application/json
+
+{
+  "name": "Piotr",
+  "salary": 7200
+}
+
 ### Pobranie konkretnego szefa
 GET http://localhost:8080/api/bosses/b05749e4-373c-49ee-a4e5-aaa53e03bb13
 

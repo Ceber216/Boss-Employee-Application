@@ -13,6 +13,8 @@ import {HttpClient} from '@angular/common/http';
 export class BossComponent implements OnInit{
   bossForm!: FormGroup;
   bosses: any = [];
+  isEditPressed: boolean = false;
+  editingBossId: string = '';
 
   constructor(private fb: FormBuilder, private http: HttpClient) {}
 
@@ -26,8 +28,17 @@ export class BossComponent implements OnInit{
 
   onSubmit(){
     if(this.bossForm.valid){
-      const data = this.bossForm.value;
-      this.http.post("/api/bosses",data ).subscribe({next: () => this.loadBosses()});
+      if(this.isEditing() == true){
+        const data = this.bossForm.value;
+        this.http.put(`/api/bosses/${this.editingBossId}`,data).subscribe({next: () => this.loadBosses()})
+        this.editingBossId = '';
+        this.isEditPressed = false;
+        this.ngOnInit();
+      }
+      else {
+        const data = this.bossForm.value;
+        this.http.post("/api/bosses", data).subscribe({next: () => this.loadBosses()});
+      }
     }
     else{
       console.log("Form is incorrect")
@@ -39,5 +50,27 @@ export class BossComponent implements OnInit{
     {
       this.bosses = data;
     });
+  }
+
+  onDelete(boss: any){
+    this.http.delete(`/api/bosses/${boss.id}`).subscribe({next: () => this.loadBosses()})
+  }
+
+  onEdit(boss: any){
+    this.isEditPressed = true;
+    this.editingBossId = boss.id
+    this.bossForm = this.fb.group({
+      name:  [boss.name, [Validators.required, Validators.minLength(1)]],
+      salary: [boss.salary,[Validators.required, Validators.pattern("^[0-9]*")]]
+    })
+  }
+
+  isEditing(): boolean{
+    return this.isEditPressed;
+  }
+
+  cancelEdit(): void{
+    this.isEditPressed = false;
+    this.ngOnInit();
   }
 }
