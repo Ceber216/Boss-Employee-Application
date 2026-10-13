@@ -6,5 +6,9 @@ export const routes: Routes = [
   {
     path: 'bosses',
     component: BossComponent
+  },
+  {
+    path: 'bosses/:id',
+    component: BossComponent
   }
 ];

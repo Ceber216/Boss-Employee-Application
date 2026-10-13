@@ -2,6 +2,7 @@ import {Component,OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-boss',
@@ -16,7 +17,7 @@ export class BossComponent implements OnInit{
   isEditPressed: boolean = false;
   editingBossId: string = '';
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {}
+  constructor(private fb: FormBuilder, private http: HttpClient,private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.bossForm = this.fb.group({
@@ -24,6 +25,20 @@ export class BossComponent implements OnInit{
       salary: ['',[Validators.required, Validators.pattern("^[0-9]*")]]
     })
     this.loadBosses();
+    this.route.paramMap.subscribe(params =>{
+      const id = params.get('id');
+      if(id){
+        this.isEditPressed = true;
+        this.editingBossId = id;
+
+        this.http.get<any>(`/api/bosses/${id}`).subscribe(boss => {
+          this.bossForm.patchValue({
+            name: boss.name,
+            salary: boss.salary
+          });
+        });
+      }
+    });
   }
 
   onSubmit(){
@@ -33,11 +48,12 @@ export class BossComponent implements OnInit{
         this.http.put(`/api/bosses/${this.editingBossId}`,data).subscribe({next: () => this.loadBosses()})
         this.editingBossId = '';
         this.isEditPressed = false;
-        this.ngOnInit();
+        this.bossForm.reset();
       }
       else {
         const data = this.bossForm.value;
         this.http.post("/api/bosses", data).subscribe({next: () => this.loadBosses()});
+        this.bossForm.reset();
       }
     }
     else{
@@ -71,6 +87,5 @@ export class BossComponent implements OnInit{
 
   cancelEdit(): void{
     this.isEditPressed = false;
-    this.ngOnInit();
   }
 }
