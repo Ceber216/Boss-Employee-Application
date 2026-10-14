@@ -16,13 +16,13 @@
             <td> {{boss.name}}</td>
             <td> {{boss.salary}}</td>
             <td>
-              <button class="delete_button"(click)="onDelete(boss)">Delete</button>
+              <button class="delete_button"(click)="onDeletePressed(boss)">Delete</button>
             </td>
             <td>
-              <button class="edit_button" (click)="onEdit(boss)">Edit</button>
+              <button class="edit_button" (click)="onEditPressed(boss)">Edit</button>
             </td>
             <td>
-              <button class="details_button" (click)="onDetails(boss)">Details</button>
+              <button class="details_button" (click)="onDetailsPressed(boss)">Details</button>
             </td>
           </tr>
         </tbody>
@@ -31,7 +31,7 @@
     <div class="divider" role="separator" aria-label="Divider"></div>
     <div class="right-side">
       <h2>{{ isEditing() ? 'Edit Boss' : 'Add New Boss' }}</h2>
-      <form [formGroup]="bossForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="bossForm" (ngSubmit)="onSubmitPressed()">
 
         <label for="name">Name:</label>
         <input type = "text" id="name" name="name" placeholder="Write boss name" formControlName="name">

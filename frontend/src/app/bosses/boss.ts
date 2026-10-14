@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-boss',
@@ -14,10 +14,11 @@ import {ActivatedRoute} from '@angular/router';
 export class BossComponent implements OnInit{
   bossForm!: FormGroup;
   bosses: any = [];
+
   isEditPressed: boolean = false;
   editingBossId: string = '';
 
-  constructor(private fb: FormBuilder, private http: HttpClient,private route: ActivatedRoute, private ref: ChangeDetectorRef) {}
+  constructor(private fb: FormBuilder, private http: HttpClient,private route: ActivatedRoute, private ref: ChangeDetectorRef, private router: Router) {}
 
   ngOnInit() {
     this.bossForm = this.fb.group({
@@ -25,36 +26,23 @@ export class BossComponent implements OnInit{
       salary: ['',[Validators.required, Validators.pattern("^[0-9]*")]]
     })
     this.loadBosses();
-    this.route.paramMap.subscribe(params =>{
-      const id = params.get('id');
-      if(id){
-        this.isEditPressed = true;
-        this.editingBossId = id;
-
-        this.http.get<any>(`/api/bosses/${id}`).subscribe(boss => {
-          this.bossForm.patchValue({
-            name: boss.name,
-            salary: boss.salary
-          });
-        });
-      }
-    });
   }
 
-  onSubmit(){
+  onSubmitPressed(){
     if(this.bossForm.valid){
       if(this.isEditing() == true){
-        const data = this.bossForm.value;
-        this.http.put(`/api/bosses/${this.editingBossId}`,data).subscribe({complete: () => this.loadBosses()});
+        this.http.put(`/api/bosses/${this.editingBossId}`,this.bossForm.value).subscribe({complete: () =>
+            this.loadBosses()
+        });
         this.editingBossId = '';
         this.isEditPressed = false;
-        this.bossForm.reset();
       }
       else {
-        const data = this.bossForm.value;
-        this.http.post("/api/bosses", data).subscribe({complete: () => this.loadBosses()});
-        this.bossForm.reset();
+        this.http.post("/api/bosses", this.bossForm.value).subscribe({complete: () =>
+            this.loadBosses()
+        });
       }
+      this.bossForm.reset();
     }
     else{
       console.log("Form is incorrect")
@@ -62,18 +50,20 @@ export class BossComponent implements OnInit{
   }
 
   loadBosses(){
-    const data = this.http.get<any[]>("/api/bosses").subscribe((data) =>
+    this.http.get("/api/bosses").subscribe((data) =>
     {
       this.bosses = data;
       this.ref.detectChanges();
     });
   }
 
-  onDelete(boss: any){
-    this.http.delete(`/api/bosses/${boss.id}`).subscribe({complete: () => this.loadBosses()})
+  onDeletePressed(boss: any){
+    this.http.delete(`/api/bosses/${boss.id}`).subscribe({complete: () =>
+        this.loadBosses()
+    });
   }
 
-  onEdit(boss: any){
+  onEditPressed(boss: any){
     this.isEditPressed = true;
     this.editingBossId = boss.id
     this.bossForm = this.fb.group({
@@ -88,9 +78,10 @@ export class BossComponent implements OnInit{
 
   cancelEdit(): void{
     this.isEditPressed = false;
+    this.bossForm.reset();
   }
 
-  onDetails(boss: any):void{
-
+  onDetailsPressed(boss: any):void{
+    this.router.navigate([boss.id], {relativeTo: this.route} );
   }
 }
