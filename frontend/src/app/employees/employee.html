@@ -1,11 +1,50 @@
 <main class="main">
   <div class="content">
     <div class="left-side">
-      <h2>How do we get here?</h2>
+      <table class="table1">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Badge Number</th>
+            <th scope="col">Delete</th>
+            <th scope="col">Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let employee of employees">
+          <td> {{employee.name}}</td>
+          <td> {{employee.badgeNumber}}</td>
+          <td>
+            <button class="delete_button"(click)="onDeletePressed(employee)">Delete</button>
+          </td>
+          <td>
+            <button class="edit_button" (click)="onEditPressed(employee)">Edit</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
     </div>
     <div class="divider" role="separator" aria-label="Divider"></div>
     <div class="right-side">
+      <h2>{{ isEditing() ? 'Edit Employee' : 'Add New Employee' }}</h2>
+      <form [formGroup]="employeeForm" (ngSubmit)="onSubmitPressed()">
 
+        <label for="name">Name:</label>
+        <input type = "text" id="name" name="name" placeholder="Write employee name" formControlName="name">
+        <br><br>
+
+        <label for="badgeNumber">Badge Number:</label>
+        <input type = "text" id="badgeNumber" name="badgeNumber" placeholder="Write employee badge" formControlName="badgeNumber">
+        <br><br>
+
+        <div class="form-actions">
+          <button type="submit" [disabled]="employeeForm.invalid">
+            {{ isEditing() ? 'Save Changes' : 'Send' }}
+          </button>
+
+          <button type="button" *ngIf="isEditing()" (click)="cancelEdit()">Cancel</button>
+        </div>
+      </form>
 
     </div>
   </div>
