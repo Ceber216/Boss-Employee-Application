@@ -142,3 +142,19 @@ main {
 .edit_button:hover {
   background-color: #1f0fb6;
 }
+
+
+.details_button {
+  background-color: #632dc8;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background-color 0.2s;
+}
+
+.details_button:hover {
+  background-color: #5105a1;
+}
