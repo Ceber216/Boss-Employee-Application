@@ -21,7 +21,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("api/bosses")
 @AllArgsConstructor
-public class BossController {
+public class  BossController {
     private final BossService _bossService;
 
     @PostMapping()

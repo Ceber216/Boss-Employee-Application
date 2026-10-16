@@ -11,7 +11,7 @@ Content-Type: application/json
 }
 
 ### Modyfikacja konkretnego szefa
-PUT http://localhost:8080/api/bosses/49176995-39d4-48d9-844b-deab7c5bf5e7
+PUT http://localhost:8080/api/bosses/ce166a82-7f02-4b73-b1fe-8f0d4f48312b
 Content-Type: application/json
 
 {
@@ -31,12 +31,21 @@ DELETE http://localhost:8080/api/bosses/383467da-1de5-4609-b73f-a695d0625ad7
 
 
 ### Dodanie pracownika do konkretnego szefa
-POST http://localhost:8080/api/bosses/383467da-1de5-4609-b73f-a695d0625ad7/employees
+POST http://localhost:8080/api/bosses/ce166a82-7f02-4b73-b1fe-8f0d4f48312b/employees
 Content-Type: application/json
 
 {
   "name": "Adam Nowak",
   "badgeNumber": 101
+}
+
+### Modyfikacja konkretnego szefa
+PUT http://localhost:8080/api/bosses/ce166a82-7f02-4b73-b1fe-8f0d4f48312b/employees/9bba42f9-f160-4371-8a15-5cfa10eefbf2
+Content-Type: application/json
+
+{
+  "name": "Piotr",
+  "badgeNumber": 24
 }
 
 ### Dodanie pracownika do nieistniejącego szefa
@@ -49,7 +58,7 @@ Content-Type: application/json
 }
 
 ### Pobranie wszystkich pracowników danego szefa
-GET http://localhost:8080/api/bosses/383467da-1de5-4609-b73f-a695d0625ad7/employees
+GET http://localhost:8080/api/bosses/0c7f2276-e718-43a2-a1c8-b25c25b13b24/employees
 
 ### Pobranie konkretnego pracownika
 GET http://localhost:8080/api/bosses/04094d98-0de5-4029-983f-99b840ac0ddf/employees/f034f186-1085-4b25-8b30-4964824af9d2

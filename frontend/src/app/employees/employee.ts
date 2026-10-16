@@ -16,8 +16,8 @@ export class EmployeeComponent implements OnInit{
   employees: any = [];
   isEditingPressed: boolean = false;
 
-  bossId : String = "";
-  //TODO  - get bossId of the boss we have in URL!!!
+  bossId : string | null = null;
+
   employeeId : String = "";
 
   employeeForm !: FormGroup;
@@ -25,6 +25,7 @@ export class EmployeeComponent implements OnInit{
   constructor(private fb: FormBuilder, private http: HttpClient, private route: ActivatedRoute, private router: Router, private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
+    this.bossId = this.route.snapshot.paramMap.get('id');
     this.employeeForm = this.fb.group({
       name: ['',[Validators.required, Validators.minLength(1)]],
       badgeNumber: ['',[Validators.required, Validators.pattern("^[0-9]*")]]
@@ -42,6 +43,7 @@ export class EmployeeComponent implements OnInit{
 
   onEditPressed(employee: any){
     this.isEditingPressed = true;
+    this.employeeId = employee.id;
     this.employeeForm = this.fb.group({
       name: [`${employee.name}`,[Validators.required,Validators.minLength(1)]],
       badgeNumber: [`${employee.badgeNumber}`,[Validators.required, Validators.pattern("^[0-9]*")]]
@@ -51,7 +53,7 @@ export class EmployeeComponent implements OnInit{
   onSubmitPressed(){
     if(this.employeeForm.valid){
       if(this.isEditingPressed){
-        this.http.put(`/api/bosses/${this.bossId}/employees/${this.employeeId}`,this.employeeForm).subscribe({
+        this.http.put(`/api/bosses/${this.bossId}/employees/${this.employeeId}`,this.employeeForm.value).subscribe({
           complete: () => {
             this.loadEmployees();
           }
@@ -60,9 +62,9 @@ export class EmployeeComponent implements OnInit{
         this.employeeId = "";
       }
       else{
-        this.http.post(`/api/bosses/${this.bossId}/employees`,this.employeeForm).subscribe({
+        this.http.post(`/api/bosses/${this.bossId}/employees`,this.employeeForm.value).subscribe({
           complete: () =>
-            this.employeeForm
+            this.loadEmployees()
         });
       }
       this.employeeForm.reset();
@@ -70,7 +72,7 @@ export class EmployeeComponent implements OnInit{
   }
 
   loadEmployees(){
-    this.employees = this.http.get(`/api/bosses/${this.bossId}/employees`).subscribe(
+    this.http.get(`/api/bosses/${this.bossId}/employees`).subscribe(
     (data) => {
         this.employees = data;
         this.ref.detectChanges();
@@ -87,4 +89,3 @@ export class EmployeeComponent implements OnInit{
     this.employeeForm.reset();
   }
 }
-
