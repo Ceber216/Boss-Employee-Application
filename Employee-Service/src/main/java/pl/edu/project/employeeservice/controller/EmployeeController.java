@@ -64,4 +64,21 @@ public class EmployeeController {
         }
         return new GetEmployeeResponse(_employeeService.findById(id).getId(), _employeeService.findById(id).getName());
     }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void putEmployee(@PathVariable UUID bossId, @PathVariable UUID id, @RequestBody CreateEmployeeDTO createEmployeeDTO){
+        if(_simplifiedBossService.findById(bossId) == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Boss not found");
+        }
+        Employee employee = _employeeService.findById(id);
+        if(employee == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Employee not found");
+        }
+
+        employee.setName(createEmployeeDTO.getName());
+        employee.setBadgeNumber(createEmployeeDTO.getBadgeNumber());
+
+        _employeeService.save(employee);
+    }
 }

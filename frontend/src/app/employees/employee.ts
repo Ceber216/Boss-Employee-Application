@@ -17,7 +17,7 @@ export class EmployeeComponent implements OnInit{
   isEditingPressed: boolean = false;
 
   bossId : String = "";
-  //TODO  - get bossId of the boss we have in URL
+  //TODO  - get bossId of the boss we have in URL!!!
   employeeId : String = "";
 
   employeeForm !: FormGroup;
@@ -33,20 +33,49 @@ export class EmployeeComponent implements OnInit{
   }
 
   onDeletePressed(employee: any){
-    //TODO - request to server to delete employee of this boss
+    this.http.delete(`/api/bosses/${this.bossId}/employees/${employee.id}`).subscribe({
+      complete: () => {
+        this.loadEmployees()
+      }
+    });
   }
 
   onEditPressed(employee: any){
     this.isEditingPressed = true;
-    //TODO - request to server to edit (put) employee of this boss
+    this.employeeForm = this.fb.group({
+      name: [`${employee.name}`,[Validators.required,Validators.minLength(1)]],
+      badgeNumber: [`${employee.badgeNumber}`,[Validators.required, Validators.pattern("^[0-9]*")]]
+    })
   }
 
   onSubmitPressed(){
-    //TODO - request to server to create (post) employee of this boss
+    if(this.employeeForm.valid){
+      if(this.isEditingPressed){
+        this.http.put(`/api/bosses/${this.bossId}/employees/${this.employeeId}`,this.employeeForm).subscribe({
+          complete: () => {
+            this.loadEmployees();
+          }
+        });
+        this.isEditingPressed = false;
+        this.employeeId = "";
+      }
+      else{
+        this.http.post(`/api/bosses/${this.bossId}/employees`,this.employeeForm).subscribe({
+          complete: () =>
+            this.employeeForm
+        });
+      }
+      this.employeeForm.reset();
+    }
   }
 
   loadEmployees(){
-    //TODO - request to server to get (get) employees of this boss
+    this.employees = this.http.get(`/api/bosses/${this.bossId}/employees`).subscribe(
+    (data) => {
+        this.employees = data;
+        this.ref.detectChanges();
+      }
+    )
   }
 
   isEditing(){
@@ -55,6 +84,7 @@ export class EmployeeComponent implements OnInit{
 
   cancelEdit(){
     this.isEditingPressed = false;
+    this.employeeForm.reset();
   }
 }
 
