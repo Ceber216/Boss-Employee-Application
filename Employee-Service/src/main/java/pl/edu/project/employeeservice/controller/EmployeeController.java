@@ -49,7 +49,7 @@ public class EmployeeController {
         }
         SimplifiedBoss boss =  _simplifiedBossService.findById(bossId);
         return boss.getEmployees().stream()
-                .map(employee -> new GetEmployeeResponse(employee.getId(),employee.getName()))
+                .map(employee -> new GetEmployeeResponse(employee.getId(),employee.getName(),employee.getBadgeNumber()))
                 .toList();
 
     }
@@ -62,7 +62,7 @@ public class EmployeeController {
         if(_employeeService.findById(id) == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Employee not found");
         }
-        return new GetEmployeeResponse(_employeeService.findById(id).getId(), _employeeService.findById(id).getName());
+        return new GetEmployeeResponse(_employeeService.findById(id).getId(), _employeeService.findById(id).getName(),_employeeService.findById(id).getBadgeNumber());
     }
 
     @PutMapping("/{id}")
