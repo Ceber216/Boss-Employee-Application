@@ -28,7 +28,7 @@ public class  BossController {
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@RequestBody CreateBossDTO createBossDTO){
         Boss boss = new Boss(UUID.randomUUID(),createBossDTO.getName(),createBossDTO.getSalary());
-        final String uri = "http://localhost:8082/api/bosses";
+        final String uri = "http://employee-container:8080/api/bosses";
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<Boss> new_boss = new HttpEntity<>(boss);
         HttpStatusCode status = restTemplate.exchange(uri, HttpMethod.POST, new_boss,Void.class).getStatusCode();
@@ -46,7 +46,7 @@ public class  BossController {
         if(_bossService.findById(id) == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Boss not found! ");
         }
-        final String uri = "http://localhost:8082/api/bosses/" + id;
+        final String uri = "http://employee-container:8080/api/bosses/" + id;
         RestTemplate restTemplate = new RestTemplate();
         HttpStatusCode status = restTemplate.exchange(uri,HttpMethod.DELETE, null,Void.class).getStatusCode();
         if(!status.is2xxSuccessful()){
