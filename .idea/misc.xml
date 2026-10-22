@@ -9,7 +9,13 @@
         <option value="$PROJECT_DIR$/Boss-Service/pom.xml" />
         <option value="$PROJECT_DIR$/cos/Employee-Service/pom.xml" />
         <option value="$PROJECT_DIR$/spring-gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/Discovery-Service/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_17" project-jdk-name="ms-17" project-jdk-type="JavaSDK">

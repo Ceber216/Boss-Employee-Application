@@ -26,6 +26,7 @@ services:
       - 'MYSQL_USER=myuser'
       - 'MYSQL_PASSWORD=secret'
       - 'MYSQL_HOST=bosses-db'
+      - 'EUREKA_URL=http://discovery-container:8761/eureka'
   employees-db:
     image: mysql:8.4.7
     environment:
@@ -46,3 +47,9 @@ services:
       - 'MYSQL_USER=myuser'
       - 'MYSQL_PASSWORD=secret'
       - 'MYSQL_HOST=employees-db'
+      - 'EUREKA_URL=http://discovery-container:8761/eureka'
+  discovery-container:
+    build: ../Discovery-Service
+    image: discovery-service
+    ports:
+      - "8761:8761"
