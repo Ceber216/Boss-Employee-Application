@@ -2,7 +2,7 @@ version: '3'
 
 services:
   frontend:
-    build: ../frontend
+    build: frontend
     image: frontend
     ports:
       - "8080:80"
@@ -15,9 +15,11 @@ services:
       - MYSQL_USER=myuser
     ports:
       - "3306:3306"
+    volumes:
+      - boss-data:/var/lib/mysql
   boss-container:
     image: boss-services
-    build: ../Boss-Service
+    build: Boss-Service
     ports:
       - "8081:8080"
     environment:
@@ -36,8 +38,10 @@ services:
       - MYSQL_USER=myuser
     ports:
       - "3307:3306"
+    volumes:
+      - employee-data:/var/lib/mysql
   employee-container:
-    build: ../Employee-Service
+    build: Employee-Service
     image: employee-service
     ports:
       - "8082:8080"
@@ -49,12 +53,12 @@ services:
       - 'MYSQL_HOST=employees-db'
       - 'EUREKA_URL=http://discovery-container:8761/eureka'
   discovery-container:
-    build: ../Discovery-Service
+    build: Discovery-Service
     image: discovery-service
     ports:
       - "8761:8761"
   employee-container2:
-    build: ../Employee-Service
+    build: Employee-Service
     image: employee-service
     ports:
       - "8083:8080"
@@ -65,3 +69,16 @@ services:
       - 'MYSQL_PASSWORD=secret'
       - 'MYSQL_HOST=employees-db'
       - 'EUREKA_URL=http://discovery-container:8761/eureka'
+  gateway-container:
+    build: spring-gateway
+    image: spring-gateway
+    environment:
+      - 'EUREKA_URL=http://discovery-container:8761/eureka'
+    depends_on:
+      - discovery-container
+      - boss-container
+      - employee-container
+      - employee-container2
+volumes:
+  boss-data:
+  employee-data:
