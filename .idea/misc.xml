@@ -10,6 +10,7 @@
         <option value="$PROJECT_DIR$/cos/Employee-Service/pom.xml" />
         <option value="$PROJECT_DIR$/spring-gateway/pom.xml" />
         <option value="$PROJECT_DIR$/Discovery-Service/pom.xml" />
+        <option value="$PROJECT_DIR$/Employee-Service/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
